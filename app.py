@@ -447,7 +447,7 @@ def create_resume_pdf():
 
     doc.build(story)
     return file_name
-    def create_portfolio_html():
+def create_portfolio_html():
     html = f"""
     <!DOCTYPE html>
     <html>
