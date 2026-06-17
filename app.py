@@ -473,7 +473,12 @@ def generate_portfolio():
     for key, value in replacements.items():
         html = html.replace(key, str(value))
 
-    return html
+    output_file = "generated_portfolio.html"
+
+    with open(output_file, "w", encoding="utf-8") as f:
+        f.write(html)
+
+    return output_file
 
 words = resume_word_count()
 if words > 650:
@@ -511,12 +516,27 @@ with col2:
 with col3:
     if st.button("Generate Portfolio Website"):
 
-        portfolio_html = generate_portfolio()
+        portfolio_file = generate_portfolio()
 
-        st.success("Portfolio Generated Successfully!")
+        st.success("Portfolio Website Generated!")
 
-        st.components.v1.html(
-            portfolio_html,
-            height=1000,
-            scrolling=True
+        with open(portfolio_file, "r", encoding="utf-8") as f:
+            html_content = f.read()
+
+        st.markdown(
+            f"""
+            <a href="data:text/html;charset=utf-8,{html_content}"
+               target="_blank">
+                <button style="
+                    background:#1F4E79;
+                    color:white;
+                    padding:10px 20px;
+                    border:none;
+                    border-radius:5px;
+                    cursor:pointer;">
+                    Open Portfolio Website
+                </button>
+            </a>
+            """,
+            unsafe_allow_html=True
         )
