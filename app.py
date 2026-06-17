@@ -325,8 +325,7 @@ def create_resume_pdf():
 
     story.append(HRFlowable(width="100%", thickness=1, color=main_color))
     story.append(Spacer(1, 8))
-
-       education_data = [
+    education_data = [
         [
             Paragraph("<b>Examination</b>", normal_style),
             Paragraph("<b>University</b>", normal_style),
