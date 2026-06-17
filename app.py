@@ -447,6 +447,55 @@ def create_resume_pdf():
 
     doc.build(story)
     return file_name
+    def create_portfolio_html():
+    html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>{name} Portfolio</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header>
+            <h1>{name}</h1>
+            <h3>{role}</h3>
+        </header>
+
+        <section>
+            <h2>About Me</h2>
+            <p>{summary}</p>
+        </section>
+
+        <section>
+            <h2>Skills</h2>
+            <p>{skills.replace(chr(10), '<br>')}</p>
+        </section>
+
+        <section>
+            <h2>Projects</h2>
+            <p>{projects.replace(chr(10), '<br>')}</p>
+        </section>
+
+        <section>
+            <h2>Experience</h2>
+            <p>{experience.replace(chr(10), '<br>')}</p>
+        </section>
+
+        <section>
+            <h2>Contact</h2>
+            <p>Email: {email}</p>
+            <p>Phone: {phone}</p>
+            <p>LinkedIn: {linkedin}</p>
+            <p>GitHub: {github}</p>
+        </section>
+    </body>
+    </html>
+    """
+
+    with open("portfolio.html", "w", encoding="utf-8") as f:
+        f.write(html)
+
+    return "portfolio.html"
 
 words = resume_word_count()
 if words > 650:
@@ -456,7 +505,7 @@ elif words > 450:
 else:
     st.success("Resume length is suitable.")
 
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 
 with col1:
     if st.button("Check ATS Score"):
@@ -480,4 +529,15 @@ with col2:
                 data=file,
                 file_name="Professional_Resume.pdf",
                 mime="application/pdf"
+            )
+with col3:
+    if st.button("Generate Portfolio Website"):
+        portfolio_file = create_portfolio_html()
+
+        with open(portfolio_file, "rb") as file:
+            st.download_button(
+                label="Download Portfolio Website",
+                data=file,
+                file_name="portfolio.html",
+                mime="text/html"
             )
