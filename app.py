@@ -354,7 +354,7 @@ def create_resume_pdf():
 
     education_table = Table(
         education_data,
-        colWidths=[190, 190, 75, 65]
+        colWidths=[180, 180, 70, 70]
     )
 
     education_table.setStyle(TableStyle([
@@ -377,7 +377,7 @@ def create_resume_pdf():
             ),
             Spacer(1, 8),
             Paragraph("SKILLS", white_heading),
-            Paragraph(make_bullets(skills), white_text),
+            Paragraph(make_bullets(skills) if skills.strip() else "N/A", white_text)
             Spacer(1, 8),
             Paragraph("CERTIFICATIONS", white_heading),
             Paragraph(make_bullets(certifications), white_text),
@@ -447,53 +447,6 @@ def create_resume_pdf():
 
     doc.build(story)
     return file_name
-
-
-words = resume_word_count()
-if words > 650:
-    st.warning("Resume may cover 2 pages. Recommended: Two Column Professional Template.")
-elif words > 450:
-    st.info("Resume is lengthy. Two-column layout is recommended.")
-else:
-    st.success("Resume length is suitable.")
-
-col1, col2 = st.columns(2)
-
-with col1:
-    if st.button("Check ATS Score"):
-        score, suggestions = ats_score(resume_text, job_description)
-
-        st.subheader("ATS Analysis")
-        st.progress(score / 100)
-        st.success(f"ATS Score: {score}%")
-
-        st.subheader("Suggestions")
-        for i, s in enumerate(suggestions, 1):
-            st.write(f"{i}. {s}")
-
-with col2:
-
-    if st.button("Generate Resume PDF"):
-        pdf_file = create_resume_pdf()
-
-        with open(pdf_file, "rb") as file:
-            st.download_button(
-                label="Download Resume PDF",
-                data=file,
-                file_name="Professional_Resume.pdf",
-                mime="application/pdf"
-            )
-
-    if st.button("Generate Portfolio Website"):
-        portfolio_file = create_portfolio_html()
-
-        with open(portfolio_file, "rb") as file:
-            st.download_button(
-                label="Download Portfolio Website",
-                data=file,
-                file_name="Portfolio_Website.html",
-                mime="text/html"
-            )
 def create_portfolio_html():
     html = f"""
     <!DOCTYPE html>
@@ -587,3 +540,50 @@ def create_portfolio_html():
         f.write(html)
 
     return file_name
+
+
+words = resume_word_count()
+if words > 650:
+    st.warning("Resume may cover 2 pages. Recommended: Two Column Professional Template.")
+elif words > 450:
+    st.info("Resume is lengthy. Two-column layout is recommended.")
+else:
+    st.success("Resume length is suitable.")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    if st.button("Check ATS Score"):
+        score, suggestions = ats_score(resume_text, job_description)
+
+        st.subheader("ATS Analysis")
+        st.progress(score / 100)
+        st.success(f"ATS Score: {score}%")
+
+        st.subheader("Suggestions")
+        for i, s in enumerate(suggestions, 1):
+            st.write(f"{i}. {s}")
+
+with col2:
+    if st.button("Generate Resume PDF"):
+        pdf_file = create_resume_pdf()
+
+        with open(pdf_file, "rb") as file:
+            st.download_button(
+                label="Download Resume PDF",
+                data=file,
+                file_name="Professional_Resume.pdf",
+                mime="application/pdf"
+            )
+
+with col3:
+    if st.button("Generate Portfolio Website"):
+        portfolio_file = create_portfolio_html()
+
+        with open(portfolio_file, "rb") as file:
+            st.download_button(
+                label="Download Portfolio Website",
+                data=file,
+                file_name="Portfolio_Website.html",
+                mime="text/html"
+            )
