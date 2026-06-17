@@ -377,7 +377,7 @@ def create_resume_pdf():
             ),
             Spacer(1, 8),
             Paragraph("SKILLS", white_heading),
-            Paragraph(make_bullets(skills) if skills.strip() else "N/A", white_text)
+            Paragraph(make_bullets(skills) if skills.strip() else "N/A", white_text),
             Spacer(1, 8),
             Paragraph("CERTIFICATIONS", white_heading),
             Paragraph(make_bullets(certifications), white_text),
