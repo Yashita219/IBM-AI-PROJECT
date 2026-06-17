@@ -472,6 +472,7 @@ with col1:
             st.write(f"{i}. {s}")
 
 with col2:
+
     if st.button("Generate Resume PDF"):
         pdf_file = create_resume_pdf()
 
@@ -482,3 +483,107 @@ with col2:
                 file_name="Professional_Resume.pdf",
                 mime="application/pdf"
             )
+
+    if st.button("Generate Portfolio Website"):
+        portfolio_file = create_portfolio_html()
+
+        with open(portfolio_file, "rb") as file:
+            st.download_button(
+                label="Download Portfolio Website",
+                data=file,
+                file_name="Portfolio_Website.html",
+                mime="text/html"
+            )
+def create_portfolio_html():
+    html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>{name} Portfolio</title>
+        <style>
+            body {{
+                font-family: Arial, sans-serif;
+                margin: 40px;
+                background: #f4f6f9;
+                color: #333;
+            }}
+
+            .container {{
+                max-width: 1000px;
+                margin: auto;
+                background: white;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            }}
+
+            h1 {{
+                color: #1F4E79;
+            }}
+
+            h2 {{
+                color: #1F4E79;
+                border-bottom: 2px solid #1F4E79;
+                padding-bottom: 5px;
+            }}
+
+            .contact {{
+                margin-bottom: 20px;
+            }}
+
+            ul {{
+                line-height: 1.8;
+            }}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+
+            <h1>{name}</h1>
+            <h3>{role}</h3>
+
+            <div class="contact">
+                <p><b>Email:</b> {email}</p>
+                <p><b>Phone:</b> {phone}</p>
+                <p><b>LinkedIn:</b> <a href="{linkedin}">{linkedin}</a></p>
+                <p><b>GitHub:</b> <a href="{github}">{github}</a></p>
+            </div>
+
+            <h2>Professional Summary</h2>
+            <p>{summary}</p>
+
+            <h2>Education</h2>
+            <ul>
+                <li>
+                    <b>{degree}</b><br>
+                    {college} ({degree_year})<br>
+                    CGPA: {cgpa}
+                </li>
+            </ul>
+
+            <h2>Skills</h2>
+            <p>{skills.replace(chr(10), '<br>')}</p>
+
+            <h2>Projects</h2>
+            <p>{projects.replace(chr(10), '<br>')}</p>
+
+            <h2>Experience</h2>
+            <p>{experience.replace(chr(10), '<br>')}</p>
+
+            <h2>Certifications</h2>
+            <p>{certifications.replace(chr(10), '<br>')}</p>
+
+            <h2>Achievements</h2>
+            <p>{achievements.replace(chr(10), '<br>')}</p>
+
+        </div>
+    </body>
+    </html>
+    """
+
+    file_name = "Portfolio_Website.html"
+
+    with open(file_name, "w", encoding="utf-8") as f:
+        f.write(html)
+
+    return file_name
