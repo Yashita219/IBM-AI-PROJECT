@@ -326,52 +326,48 @@ def create_resume_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=main_color))
     story.append(Spacer(1, 8))
 
-   education_data = [
-    
-        Paragraph("<b>Examination</b>", normal_style),
-        Paragraph("<b>University</b>", normal_style),
-        Paragraph("<b>Year</b>", normal_style),
-        Paragraph("<b>CPI/%</b>", normal_style),
-    ],
-    [
-        Paragraph(safe(degree), normal_style),
-        Paragraph(safe(college), normal_style),
-        Paragraph(safe(degree_year), normal_style),
-        Paragraph(safe(cgpa), normal_style),
-    ],
-    [
-        Paragraph("XII", normal_style),
-        Paragraph(safe(school12), normal_style),
-        Paragraph(safe(year12), normal_style),
-        Paragraph(safe(percent12), normal_style),
-    ],
-    [
-        Paragraph("X", normal_style),
-        Paragraph(safe(school10), normal_style),
-        Paragraph(safe(year10), normal_style),
-        Paragraph(safe(percent10), normal_style),
-    ],
-]
+       education_data = [
+        [
+            Paragraph("<b>Examination</b>", normal_style),
+            Paragraph("<b>University</b>", normal_style),
+            Paragraph("<b>Year</b>", normal_style),
+            Paragraph("<b>CPI/%</b>", normal_style),
+        ],
+        [
+            Paragraph(safe(degree), normal_style),
+            Paragraph(safe(college), normal_style),
+            Paragraph(safe(degree_year), normal_style),
+            Paragraph(safe(cgpa), normal_style),
+        ],
+        [
+            Paragraph("XII", normal_style),
+            Paragraph(safe(school12), normal_style),
+            Paragraph(safe(year12), normal_style),
+            Paragraph(safe(percent12), normal_style),
+        ],
+        [
+            Paragraph("X", normal_style),
+            Paragraph(safe(school10), normal_style),
+            Paragraph(safe(year10), normal_style),
+            Paragraph(safe(percent10), normal_style),
+        ]
+    ]
 
-education_table = Table(
-    education_data,
-    colWidths=[190, 190, 75, 65]
-)
+    education_table = Table(
+        education_data,
+        colWidths=[190, 190, 75, 65]
+    )
 
-education_table.setStyle(TableStyle([
-    ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
-    ("FONTSIZE", (0, 0), (-1, -1), 9),
-
-    ("ALIGN", (0, 0), (1, -1), "LEFT"),
-    ("ALIGN", (2, 0), (-1, -1), "CENTER"),
-
-    ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-
-    ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
-    ("TOPPADDING", (0, 0), (-1, -1), 6),
-
-    ("LINEBELOW", (0, 0), (-1, 0), 0.5, colors.black),
-]))
+    education_table.setStyle(TableStyle([
+        ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+        ("FONTSIZE", (0, 0), (-1, -1), 9),
+        ("ALIGN", (0, 0), (1, -1), "LEFT"),
+        ("ALIGN", (2, 0), (-1, -1), "CENTER"),
+        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+        ("TOPPADDING", (0, 0), (-1, -1), 6),
+        ("LINEBELOW", (0, 0), (-1, 0), 0.5, colors.black),
+    ]))
 
     if template == "Two Column Professional Template":
         left_content = [
